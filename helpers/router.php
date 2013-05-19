@@ -8,8 +8,7 @@ The static (class) methods in this class are used to find an appropriate control
 class router {
 
 	static function route() {
-	
-		$url = explode('?',$_SERVER['REQUEST_URI']);
+		$url = explode('?',str_replace(BASE_URI, '', $_SERVER['REQUEST_URI']));
 		$path = mb_strtolower($url[0]);
 		while (substr($path, -1) == '/') {
 			$path = mb_substr($path,0,(mb_strlen($path)-1));
@@ -21,6 +20,7 @@ class router {
 		$action = "index";
 		
 		//Handle home page requests
+
 		if (count($path_components) == 1) {
 			router::perform_controller_action("home",$action,array(),array());
 		}
